@@ -56,6 +56,20 @@ WHERE year = 1960;
     --   LEFT JOIN brands AS b
     --     ON b.name = m.brand_name
     -- WHERE b.discontinued IS NULL;
+SELECT name
+FROM Brands
+WHERE discontinued IS NULL;
+
+-- These are all the brands that are not discontinued:
+ -- Ford
+ -- Chrysler
+ -- Citroën
+ -- Chevrolet
+ -- Cadillac
+ -- BMW
+ -- Buick
+ -- Tesla
+
 
 -- 2. Modify this left join so it only selects models that have brands in the Brands table.
 -- before:
@@ -83,6 +97,11 @@ FROM Brands AS b
 LEFT JOIN Models AS m
 ON b.name = brand_name
 WHERE m.id IS NULL;
+
+--  name  | founded 
+-- -------+---------
+--  Tesla |    2003
+-- (1 row)
 
 -- 4. Modify the query to add another column to the results to show
 -- the number of years from the year of the model until the brand becomes discontinued
