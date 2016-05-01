@@ -80,8 +80,19 @@ WHERE discontinued IS NULL;
     --   LEFT JOIN Brands AS b
     --     ON b.name = m.brand_name;
 
+SELECT m.name, m.brand_name, b.founded
+FROM Brands AS b
+LEFT JOIN Models AS m
+ON m.brand_name = b.name;    
+
 -- followup question: In your own words, describe the difference between
 -- left joins and inner joins.
+
+-- Left Join - returns "all" rows from table 1(left table) 
+-- with the matching rows from table 2(rigth table).
+
+-- inner Join - combine rows from 2 or more tables
+-- based on "common" fields(columns) between them
 
 -- 3. Modify the query so that it only selects brands that don't have any models in the models table.
 -- (Hint: it should only show Tesla's row.)
@@ -115,6 +126,34 @@ WHERE m.id IS NULL;
     --   LEFT JOIN brands AS b
     --     ON m.brand_name = b.name
     -- WHERE b.discontinued NOT NULL;
+
+SELECT Brands.name, Models.name, Models.year, Brands.discontinued,
+Brands.discontinued - Models.year AS years_until_brand_discontinued
+FROM Models
+LEFT JOIN Brands
+ON Models.Brand_name = Brands.name
+WHERE Brands.discontinued IS NOT NULL;
+
+ -- Hillman    | Minx Magnificent | 1950 |         1981 |                             31
+ -- Austin     | Mini             | 1959 |         1987 |                             28
+ -- Fairthorpe | Rockette         | 1960 |         1976 |                             16
+ -- Austin     | Mini Cooper      | 1961 |         1987 |                             26
+ -- Studebaker | Avanti           | 1961 |         1967 |                              6
+ -- Pontiac    | Tempest          | 1961 |         2010 |                             49
+ -- Pontiac    | Grand Prix       | 1962 |         2010 |                             48
+ -- Studebaker | Avanti           | 1962 |         1967 |                              5
+ -- Austin     | Mini             | 1963 |         1987 |                             24
+ -- Austin     | Mini Cooper S    | 1963 |         1987 |                             24
+ -- Rambler    | Classic          | 1963 |         1969 |                              6
+ -- Studebaker | Avanti           | 1963 |         1967 |                              4
+ -- Pontiac    | Grand Prix       | 1963 |         2010 |                             47
+ -- Pontiac    | GTO              | 1964 |         2010 |                             46
+ -- Pontiac    | LeMans           | 1964 |         2010 |                             46
+ -- Pontiac    | Bonneville       | 1964 |         2010 |                             46
+ -- Pontiac    | Grand Prix       | 1964 |         2010 |                             46
+ -- Plymouth   | Fury             | 1964 |         2001 |                             37
+ -- Studebaker | Avanti           | 1964 |         1967 |                              3
+ -- Austin     | Mini Cooper      | 1964 |         1987 |                             23
 
 
 
