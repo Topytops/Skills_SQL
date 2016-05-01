@@ -4,12 +4,45 @@
 
 -- 1. Select all columns for all brands in the Brands table.
 SELECT * FROM brands;
-
+ --  1 | Ford       |    1903 | Dearborn, MI                       |             
+ --  2 | Chrysler   |    1925 | Auburn Hills, Michigan             |             
+ --  3 | Citroën    |    1919 | Saint-Ouen, France                 |             
+ --  4 | Hillman    |    1907 | Ryton-on-Dunsmore, England         |         1981
+ --  5 | Chevrolet  |    1911 | Detroit, Michigan                  |             
+ --  6 | Cadillac   |    1902 | New York City, NY                  |             
+ --  7 | BMW        |    1916 | Munich, Bavaria, Germany           |             
+ --  8 | Austin     |    1905 | Longbridge, England                |         1987
+ --  9 | Fairthorpe |    1954 | Chalfont St Peter, Buckinghamshire |         1976
+ -- 10 | Studebaker |    1852 | South Bend, Indiana                |         1967
+ -- 11 | Pontiac    |    1926 | Detroit, MI                        |         2010
+ -- 12 | Buick      |    1903 | Detroit, MI                        |             
+ -- 13 | Rambler    |    1901 | Kenosha, Washington                |         1969
+ -- 14 | Plymouth   |    1928 | Auburn Hills, Michigan             |         2001
+ -- 15 | Tesla      |    2003 | Palo Alto, CA                      |             
 -- 2. Select all columns for all car models made by Pontiac in the Models table.
 SELECT * FROM Models WHERE brand_name = 'Pontiac';
+-- 25 | 1961 | Pontiac    | Tempest
+--  27 | 1962 | Pontiac    | Grand Prix
+--  36 | 1963 | Pontiac    | Grand Prix
+--  42 | 1964 | Pontiac    | GTO
+--  43 | 1964 | Pontiac    | LeMans
+--  44 | 1964 | Pontiac    | Bonneville
+--  45 | 1964 | Pontiac    | Grand Prix
+
 -- 3. Select the brand name and model
 --    name for all models made in 1964 from the Models table.
 SELECT brand_name, name FROM models WHERE year = '1964';
+ -- Chevrolet  | Corvette
+ -- Ford       | Mustang
+ -- Ford       | Galaxie
+ -- Pontiac    | GTO
+ -- Pontiac    | LeMans
+ -- Pontiac    | Bonneville
+ -- Pontiac    | Grand Prix
+ -- Plymouth   | Fury
+ -- Studebaker | Avanti
+ -- Austin     | Mini Cooper
+
 -- 4. Select the model name, brand name, and headquarters for the Ford Mustang
 --    from the Models and Brands tables.
 SELECT Models.name, Models.brand_name, Brands.headquarters 
@@ -17,18 +50,43 @@ FROM Models
 JOIN Brands 
 ON Models.brand_name=Brands.name
 WHERE Models.brand_name='Ford' AND Models.name='Mustang';
+-- Mustang | Ford       | Dearborn, MI
 
 -- 5. Select all rows for the three oldest brands
 --    from the Brands table (Hint: you can use LIMIT and ORDER BY).
 SELECT * FROM Brands ORDER BY founded LIMIT 3;
+ -- 10 | Studebaker |    1852 | South Bend, Indiana |         1967
+ -- 13 | Rambler    |    1901 | Kenosha, Washington |         1969
+ --  6 | Cadillac   |    1902 | New York City, NY   |             
 
 -- 6. Count the Ford models in the database (output should be a number).
 SELECT COUNT(*) FROM Models WHERE brand_name='Ford';
+  -- 6
+
 -- 7. Select the name of any and all car brands that are not discontinued.
 SELECT name FROM Brands WHERE discontinued IS NULL;
+-- Ford
+--  Chrysler
+--  Citroën
+--  Chevrolet
+--  Cadillac
+--  BMW
+--  Buick
+--  Tesla
 
 -- 8. Select rows 15-25 of the DB in alphabetical order by model name.
-SELECT * FROM Models WHERE id > 14 AND id < 26 ORDER BY brand_name;
+SELECT * FROM models ORDER BY name OFFSET 14 LIMIT 11;
+-- 28 | 1962 | Chevrolet  | Corvette
+--  10 | 1956 | Chevrolet  | Corvette
+--  17 | 1959 | Chevrolet  | Corvette
+--   8 | 1955 | Chevrolet  | Corvette
+--   6 | 1954 | Chevrolet  | Corvette
+--  20 | 1960 | Chevrolet  | Corvette
+--  26 | 1961 | Chevrolet  | Corvette
+--  39 | 1964 | Chevrolet  | Corvette
+--  38 | 1963 | Chevrolet  | Corvette
+--   5 | 1953 | Chevrolet  | Corvette
+--  34 | 1963 | Ford       | E-Series
 
 -- 9. Select the brand, name, and year the model's brand was
 --    founded for all of the models from 1960. Include row(s)
@@ -40,7 +98,10 @@ FROM Models
 LEFT JOIN Brands
 ON Brands.name=Models.brand_name
 WHERE year = 1960;
-
+ -- Chevrolet  |    1911
+ -- Chevrolet  |    1911
+ -- Fairthorpe |    1954
+ -- Fillmore   |        
 
 -- Part 2: Change the following queries according to the specifications.
 -- Include the answers to the follow up questions in a comment below your
@@ -161,6 +222,10 @@ WHERE Brands.discontinued IS NOT NULL;
 -- Part 3: Further Study
 
 -- 1. Select the name of any brand with more than 5 models in the database.
+SELECT brand_name FROM Models GROUP BY brand_name HAVING COUNT(*) >5;
+ -- Chevrolet
+ -- Pontiac
+ -- Ford
 
 -- 2. Add the following rows to the Models table.
 
@@ -172,10 +237,23 @@ WHERE Brands.discontinued IS NOT NULL;
 -- 2015    Chevrolet  Malibu
 -- 2015    Subaru     Outback
 
+INSERT INTO models (year, name, brand_name)
+VALUES (2015, 'Chevrolet', 'Malibu'),
+(2015, 'Subaru', 'Outback');
+-- INSERT 0 2
+ SELECT * FROM models ORDER BY id DESC LIMIT 2;
+ -- 50 | 2015 | Outback    | Subaru
+ -- 49 | 2015 | Malibu     | Chevrolet
+
 -- 3. Write a SQL statement to crate a table called `Awards`
 --    with columns `name`, `year`, and `winner`. Choose
 --    an appropriate datatype and nullability for each column
 --   (no need to do subqueries here).
+CREATE TABLE Awards(
+name VARCHAR (20) NOT NULL,
+year INTEGER,
+winner_id NOT NULL
+);
 
 -- 4. Write a SQL statement that adds the following rows to the Awards table:
 
