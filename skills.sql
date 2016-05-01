@@ -9,17 +9,21 @@ SELECT * FROM brands;
 SELECT * FROM Models WHERE brand_name = 'Pontiac';
 -- 3. Select the brand name and model
 --    name for all models made in 1964 from the Models table.
-
+SELECT brand_name, name FROM models WHERE year = '1964';
 -- 4. Select the model name, brand name, and headquarters for the Ford Mustang
 --    from the Models and Brands tables.
-
+SELECT Models.name, Models.brand_name, Brands.headquarters 
+FROM Models
+JOIN Brands 
+ON Models.brand_name=Brands.name
+WHERE Models.brand_name='Ford' AND Models.name='Mustang';
 
 -- 5. Select all rows for the three oldest brands
 --    from the Brands table (Hint: you can use LIMIT and ORDER BY).
-
+SELECT * FROM Brands ORDER BY founded LIMIT 3;
 
 -- 6. Count the Ford models in the database (output should be a number).
-
+SELECT COUNT(*) FROM Models WHERE brand_name='Ford';
 -- 7. Select the name of any and all car brands that are not discontinued.
 SELECT name FROM Brands WHERE discontinued IS NULL;
 
@@ -31,7 +35,11 @@ SELECT * FROM Models WHERE id > 14 AND id < 26 ORDER BY brand_name;
 --    for model(s) even if its brand is not in the Brands table.
 --    (The year the brand was founded should be NULL if
 --    the brand is not in the Brands table.)
-
+SELECT brand_name, Brands.founded
+FROM Models
+LEFT JOIN Brands
+ON Brands.name=Models.brand_name
+WHERE year = 1960;
 
 
 -- Part 2: Change the following queries according to the specifications.
